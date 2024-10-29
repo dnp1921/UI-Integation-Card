@@ -1,0 +1,137 @@
+{
+    "_version": "1.15.0",
+    "sap.app": {
+        "id": "com.example.card.GenericItemList",
+        "type": "card",
+        "title": "Generic Item List Overview",
+        "subTitle": "Filter and View Detailed Information",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "shortTitle": "Item List Overview",
+        "info": "This card shows a list of items with detailed information.",
+        "description": "A detailed view of items including description, manufacturer, delivery time, and category.",
+        "tags": {
+            "keywords": [
+                "Catalog",
+                "Items",
+                "Details"
+            ]
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://document-text"
+        }
+    },
+    "sap.card": {
+        "type": "Table",
+        "extension": "./DataExtension",
+        "configuration": {
+            "destinations": {
+                "GenericAPI": {
+                    "name": "GenericAPI",
+                    "label": "Select correct destination",
+                    "defaultUrl": "https://example.com/api/v4/resource/Items"
+                }
+            },
+            "filters": {
+                "Field1": {
+                    "type": "Select",
+                    "label": "Field 1",
+                    "value": "",
+                    "item": {
+                        "path": "/Field1Options",
+                        "template": {
+                            "key": "{Field1}",
+                            "title": "{Field1}"
+                        }
+                    },
+                    "data": {
+                        "extension": {
+                            "method": "getDataField1"
+                        }
+                    }
+                },
+                "Field2": {
+                    "type": "Select",
+                    "label": "Field 2",
+                    "value": "",
+                    "item": {
+                        "path": "/Field2Options",
+                        "template": {
+                            "key": "{Field2}",
+                            "title": "{Field2}"
+                        }
+                    },
+                    "data": {
+                        "extension": {
+                            "method": "getDataField2"
+                        }
+                    }
+                }
+            },
+            "parameters": {
+                "mainTitle": {
+                    "value": "Item List Overview"
+                },
+                "subTitle": {
+                    "value": "Filter and view detailed information"
+                }
+            }
+        },
+        "header": {
+            "title": "{parameters>/mainTitle/value}",
+            "subTitle": "{parameters>/subTitle/value}",
+            "icon": {
+                "src": "sap-icon://document-text"
+            },
+            "actions": [
+                {
+                    "type": "Custom",
+                    "text": "Clear Filters",
+                    "action": "clearFilters"
+                }
+            ]
+        },
+        "data": {
+            "extension": {
+                "method": "getData",
+                "args": [
+                    "{filters>/Field1/value}",
+                    "{filters>/Field2/value}"
+                ]
+            }
+        },
+        "content": {
+            "maxItems": 6,
+            "row": {
+                "columns": [
+                    {
+                        "title": "Item Name",
+                        "value": "{Description}"
+                    },
+                    {
+                        "title": "Field 1",
+                        "value": "{Field1}"
+                    },
+                    {
+                        "title": "Delivery Info",
+                        "value": "{DeliveryInfo}{Unit}"
+                    },
+                    {
+                        "title": "Category",
+                        "value": "{Category}"
+                    }
+                ]
+            }
+        },
+        "footer": {
+            "paginator": {
+                "pageSize": 6
+            }
+        },
+        "designtime": "sap/ui/integration/designtime/cardEditor/ConfigurationTemplate"
+    }
+}
